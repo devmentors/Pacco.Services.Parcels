@@ -1,8 +1,9 @@
 using System;
+using Convey.Types;
 
 namespace Pacco.Services.Parcels.Core.Entities
 {
-    public class Parcel
+    public class Parcel : IIdentifiable<Guid>
     {
         public Guid Id { get; private set; }
         public Guid CustomerId { get; private set; }

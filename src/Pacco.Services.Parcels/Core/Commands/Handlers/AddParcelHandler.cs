@@ -15,7 +15,7 @@ namespace Pacco.Services.Parcels.Core.Commands.Handlers
 
         public async Task HandleAsync(AddParcel command)
         {
-            _logger.LogInformation($"Add parcel: {command.Id} {command.Name}");
+            _logger.LogInformation($"Adding a parcel: {command.Id} {command.Name}");
             await Task.CompletedTask;
         }
     }

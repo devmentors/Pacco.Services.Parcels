@@ -4,7 +4,7 @@ using Convey.WebApi.CQRS;
 
 namespace Pacco.Services.Parcels.Core.Commands
 {
-    [PublicMessage]
+    [PublicContract]
     public class AddParcel : ICommand
     {
         public Guid Id { get; }
