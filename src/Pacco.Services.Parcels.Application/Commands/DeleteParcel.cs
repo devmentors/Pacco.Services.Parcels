@@ -1,10 +1,8 @@
 using System;
 using Convey.CQRS.Commands;
-using Convey.WebApi.CQRS;
 
-namespace Pacco.Services.Parcels.Core.Commands
+namespace Pacco.Services.Parcels.Application.Commands
 {
-    [PublicContract]
     public class DeleteParcel : ICommand
     {
         public Guid Id { get; }

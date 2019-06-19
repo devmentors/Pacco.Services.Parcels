@@ -1,6 +1,6 @@
 namespace Pacco.Services.Parcels.Core.Entities
 {
-    public enum Dimension
+    public enum Size
     {
         Tiny,
         Small,

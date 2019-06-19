@@ -7,7 +7,6 @@ namespace Pacco.Services.Parcels.Core.Repositories
     public interface IParcelRepository
     {
         Task AddAsync(Parcel parcel);
-        Task<Parcel> BrowseAsync(Guid customerId);
         Task DeleteAsync(Guid id);
     }
 }
