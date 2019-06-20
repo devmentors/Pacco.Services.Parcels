@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Convey;
 using Convey.WebApi;
@@ -23,19 +22,19 @@ namespace Pacco.Services.Parcels.Api
                     .AddConvey()
                     .AddWebApi()
                     .AddApplication()
-                    .AddInfrastructure())
+                    .AddInfrastructure()
+                    .Build())
                 .Configure(app => app
                     .UseErrorHandler()
-                    .UseInitializers()
                     .UsePublicContracts(false)
+                    .UseInfrastructure()
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsync("Welcome to Pacco Parcels Service!"))
+                        .Get<GetParcel, ParcelDto>("parcels/{id}")
                         .Get<GetParcels, IEnumerable<ParcelDto>>("parcels")
+                        .Delete<DeleteParcel>("parcels/{id}")
                         .Post<AddParcel>("parcels",
-                            afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.Id}"))
-                        .Delete("parcels/{id}",
-                            ctx => ctx.SendAsync(new DeleteParcel(ctx.Args<Guid>("id"))))
-                    ).InitAsync())
+                            afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.Id}"))))
                 .Build()
                 .RunAsync();
     }

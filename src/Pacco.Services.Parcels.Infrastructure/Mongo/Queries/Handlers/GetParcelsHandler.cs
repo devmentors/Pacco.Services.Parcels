@@ -31,18 +31,7 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Queries.Handlers
 
             var parcels = await documents.ToListAsync();
 
-            return parcels.Select(p =>
-
-                new ParcelDto
-                {
-                    Id = p.Id,
-                    CustomerId = p.CustomerId,
-                    Variant = p.Variant.ToString().ToLowerInvariant(),
-                    Size = p.Size.ToString().ToLowerInvariant(),
-                    Name = p.Name,
-                    Description = p.Description
-                }
-            );
+            return parcels.Select(p => p.AsDto());
         }
     }
 }

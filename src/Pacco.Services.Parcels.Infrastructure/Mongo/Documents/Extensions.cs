@@ -1,18 +1,16 @@
-using System.Threading.Tasks;
+using Pacco.Services.Parcels.Application.DTO;
 using Pacco.Services.Parcels.Core.Entities;
 
 namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
 {
-    internal static class Extensions
+    public static class Extensions
     {
-        internal static Parcel AsEntity(this ParcelDocument document)
+        public static Parcel AsEntity(this ParcelDocument document)
             => new Parcel(document.Id, document.CustomerId, document.Variant, document.Size, document.Name,
                 document.Description);
 
-        internal static async Task<Parcel> AsEntityAsync(this Task<ParcelDocument> task)
-            => (await task).AsEntity();
 
-        internal static ParcelDocument AsDocument(this Parcel entity)
+        public static ParcelDocument AsDocument(this Parcel entity)
             => new ParcelDocument
             {
                 Id = entity.Id,
@@ -23,7 +21,15 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
                 Description = entity.Description
             };
 
-        internal static async Task<ParcelDocument> AsDocumentAsync(this Task<Parcel> task)
-            => (await task).AsDocument();
+        public static ParcelDto AsDto(this ParcelDocument document)
+            => new ParcelDto
+            {
+                Id = document.Id,
+                CustomerId = document.CustomerId,
+                Variant = document.Variant.ToString().ToLowerInvariant(),
+                Size = document.Size.ToString().ToLowerInvariant(),
+                Name = document.Name,
+                Description = document.Description
+            };
     }
 }
