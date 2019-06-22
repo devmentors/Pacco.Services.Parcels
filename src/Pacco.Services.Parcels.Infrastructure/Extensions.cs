@@ -28,7 +28,7 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddInMemoryQueryDispatcher()
                 .AddRabbitMq()
                 .AddMongo()
-                .AddMongoRepository<ParcelDocument, Guid>("parcels");
+                .AddMongoRepository<ParcelDocument, Guid>("Parcels");
         }
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)

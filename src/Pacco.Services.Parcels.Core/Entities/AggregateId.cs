@@ -25,16 +25,14 @@ namespace Pacco.Services.Parcels.Core.Entities
         public bool Equals(AggregateId other)
         {
             if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Value.Equals(other.Value);
+            return ReferenceEquals(this, other) || Value.Equals(other.Value);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((AggregateId) obj);
+            return obj.GetType() == GetType() && Equals((AggregateId) obj);
         }
 
         public override int GetHashCode()

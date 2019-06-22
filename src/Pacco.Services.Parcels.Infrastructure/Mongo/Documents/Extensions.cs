@@ -9,7 +9,6 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
             => new Parcel(document.Id, document.CustomerId, document.Variant, document.Size, document.Name,
                 document.Description);
 
-
         public static ParcelDocument AsDocument(this Parcel entity)
             => new ParcelDocument
             {
