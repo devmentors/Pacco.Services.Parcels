@@ -18,6 +18,6 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Repositories
 
         public Task AddAsync(Parcel parcel) => _repository.AddAsync(parcel.AsDocument());
         
-        public Task DeleteAsync(Guid id) => _repository.DeleteAsync(id);
+        public Task DeleteAsync(AggregateId id) => _repository.DeleteAsync(id);
     }
 }

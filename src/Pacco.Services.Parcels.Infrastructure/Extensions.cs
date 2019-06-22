@@ -4,6 +4,7 @@ using Convey.Persistence.MongoDB;
 using Convey.CQRS.Queries;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
+using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Pacco.Services.Parcels.Application;
@@ -27,12 +28,14 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddInMemoryQueryDispatcher()
                 .AddRabbitMq()
                 .AddMongo()
-                .AddMongoRepository<ParcelDocument, Guid>("Parcels");
+                .AddMongoRepository<ParcelDocument, Guid>("parcels");
         }
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
-            app.UseInitializers().UseRabbitMq()
+            app.UsePublicContracts(false)
+                .UseInitializers()
+                .UseRabbitMq()
                 .SubscribeCommand<AddParcel>()
                 .SubscribeCommand<DeleteParcel>();
 
