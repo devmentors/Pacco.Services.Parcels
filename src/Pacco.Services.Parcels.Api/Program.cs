@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Convey;
+using Convey.Logging;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore;
@@ -34,6 +35,7 @@ namespace Pacco.Services.Parcels.Api
                         .Delete<DeleteParcel>("parcels/{id}")
                         .Post<AddParcel>("parcels",
                             afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.Id}"))))
+                .UseLogging()
                 .Build()
                 .RunAsync();
     }
