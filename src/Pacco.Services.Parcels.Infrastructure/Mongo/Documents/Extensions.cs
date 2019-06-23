@@ -7,7 +7,7 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
     {
         public static Parcel AsEntity(this ParcelDocument document)
             => new Parcel(document.Id, document.CustomerId, document.Variant, document.Size, document.Name,
-                document.Description);
+                document.Description, document.CreatedAt);
 
         public static ParcelDocument AsDocument(this Parcel entity)
             => new ParcelDocument
@@ -17,7 +17,8 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
                 Variant = entity.Variant,
                 Size = entity.Size,
                 Name = entity.Name,
-                Description = entity.Description
+                Description = entity.Description,
+                CreatedAt = entity.CreatedAt
             };
 
         public static ParcelDto AsDto(this ParcelDocument document)
@@ -28,7 +29,8 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
                 Variant = document.Variant.ToString().ToLowerInvariant(),
                 Size = document.Size.ToString().ToLowerInvariant(),
                 Name = document.Name,
-                Description = document.Description
+                Description = document.Description,
+                CreatedAt = document.CreatedAt
             };
     }
 }

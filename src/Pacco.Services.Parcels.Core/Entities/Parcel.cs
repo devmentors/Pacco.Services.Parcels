@@ -1,18 +1,20 @@
 using System;
+using Pacco.Services.Parcels.Core.Events;
 using Pacco.Services.Parcels.Core.Exceptions;
 
 namespace Pacco.Services.Parcels.Core.Entities
 {
-    public class Parcel
+    public class Parcel : AggregateRoot
     {
-        public AggregateId Id { get; private set; }
         public Guid CustomerId { get; private set; }
         public Variant Variant { get; private set; }
         public Size Size { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public DateTime CreatedAt { get; private set; }
 
-        public Parcel(AggregateId id, Guid customerId, Variant variant, Size size, string name, string description)
+        public Parcel(AggregateId id, Guid customerId, Variant variant, Size size,
+            string name, string description, DateTime createdAt)
         {
             Id = id;
             CustomerId = customerId;
@@ -22,6 +24,9 @@ namespace Pacco.Services.Parcels.Core.Entities
             Description = string.IsNullOrWhiteSpace(description)
                 ? throw new InvalidParcelDescriptionException(description)
                 : description;
+            CreatedAt = createdAt;
+            AddEvent(new ParcelAdded(this));
         }
     }
 }
+

@@ -7,12 +7,12 @@ using Convey.MessageBrokers.RabbitMQ;
 using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Pacco.Services.Parcels.Application;
 using Pacco.Services.Parcels.Application.Commands;
+using Pacco.Services.Parcels.Application.Services;
 using Pacco.Services.Parcels.Core.Repositories;
-using Pacco.Services.Parcels.Infrastructure.MessageBrokers;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Documents;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Repositories;
+using Pacco.Services.Parcels.Infrastructure.Services;
 
 namespace Pacco.Services.Parcels.Infrastructure
 {
@@ -20,8 +20,10 @@ namespace Pacco.Services.Parcels.Infrastructure
     {
         public static IConveyBuilder AddInfrastructure(this IConveyBuilder builder)
         {
+            builder.Services.AddSingleton<IEventMapper, EventMapper>();
             builder.Services.AddTransient<IMessageBroker, MessageBroker>();
             builder.Services.AddTransient<IParcelRepository, ParcelMongoRepository>();
+            builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
             return builder
                 .AddQueryHandlers()

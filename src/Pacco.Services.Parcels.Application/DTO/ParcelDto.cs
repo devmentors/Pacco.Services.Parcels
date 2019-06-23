@@ -11,6 +11,7 @@ namespace Pacco.Services.Parcels.Application.DTO
         public string Size { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public ParcelDto()
         {
@@ -20,10 +21,11 @@ namespace Pacco.Services.Parcels.Application.DTO
         {
             Id = parcel.Id;
             CustomerId = parcel.CustomerId;
-            Variant = parcel.Variant.ToString();
-            Size = parcel.Size.ToString();
+            Variant = parcel.Variant.ToString().ToLowerInvariant();
+            Size = parcel.Size.ToString().ToLowerInvariant();
             Name = parcel.Name;
             Description = parcel.Description;
+            CreatedAt = parcel.CreatedAt;
         }
     }
 }

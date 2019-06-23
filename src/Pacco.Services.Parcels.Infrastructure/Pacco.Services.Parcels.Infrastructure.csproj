@@ -18,4 +18,8 @@
       <ProjectReference Include="..\Pacco.Services.Parcels.Application\Pacco.Services.Parcels.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="MessageBrokers" />
+    </ItemGroup>
+
 </Project>

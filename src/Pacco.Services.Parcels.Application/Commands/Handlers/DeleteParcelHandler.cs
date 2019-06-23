@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Convey.CQRS.Commands;
 using Pacco.Services.Parcels.Application.Events;
+using Pacco.Services.Parcels.Application.Services;
 using Pacco.Services.Parcels.Core.Repositories;
 
 namespace Pacco.Services.Parcels.Application.Commands.Handlers
