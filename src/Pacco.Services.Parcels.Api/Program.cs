@@ -32,6 +32,7 @@ namespace Pacco.Services.Parcels.Api
                         .Get("", ctx => ctx.Response.WriteAsync("Welcome to Pacco Parcels Service!"))
                         .Get<GetParcel, ParcelDto>("parcels/{id}")
                         .Get<GetParcels, IEnumerable<ParcelDto>>("parcels")
+                        .Get<GetParcelsVolume, ParcelsVolumeDto>("parcels_/volume")
                         .Delete<DeleteParcel>("parcels/{id}")
                         .Post<AddParcel>("parcels",
                             afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.Id}"))))
