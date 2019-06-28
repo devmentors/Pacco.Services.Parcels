@@ -1,0 +1,23 @@
+@url = http://localhost:5008
+@id = dc20a986-0564-4844-8380-b55290e54f36
+@customerId = b5268d75-71ac-4907-98d3-d6f697826c69
+
+###
+GET {{url}}/parcels?customerId={{customerId}}
+
+###
+GET {{url}}/parcels/{{id}}
+
+###
+POST {{url}}/parcels
+
+{
+  "customerId": "{{customerId}}",
+  "variant": "weapon",
+  "size": "large",
+  "name": "Parcel #1",
+  "description": "My parcel #1"
+}
+
+###
+DELETE {{url}}/parcels/{{id}}
