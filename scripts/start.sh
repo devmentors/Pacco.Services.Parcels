@@ -1,4 +1,4 @@
 #!/bin/bash
 export ASPNETCORE_ENVIRONMENT=local
-cd src/Pacco.Services.Parcels
+cd src/Pacco.Services.Parcels.Api
 dotnet run

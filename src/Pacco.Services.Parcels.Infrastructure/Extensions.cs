@@ -2,6 +2,9 @@ using System;
 using Convey;
 using Convey.Persistence.MongoDB;
 using Convey.CQRS.Queries;
+using Convey.Discovery.Consul;
+using Convey.HTTP;
+using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.WebApi.CQRS;
@@ -29,6 +32,9 @@ namespace Pacco.Services.Parcels.Infrastructure
             return builder
                 .AddQueryHandlers()
                 .AddInMemoryQueryDispatcher()
+                .AddHttpClient()
+                .AddConsul()
+                .AddFabio()
                 .AddRabbitMq()
                 .AddMongo()
                 .AddMongoRepository<ParcelDocument, Guid>("Parcels");

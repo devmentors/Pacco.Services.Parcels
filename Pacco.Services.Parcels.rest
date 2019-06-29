@@ -1,12 +1,12 @@
 @url = http://localhost:5008
-@id = dc20a986-0564-4844-8380-b55290e54f36
-@customerId = b5268d75-71ac-4907-98d3-d6f697826c69
+@parcelId = c2ab6285-eea4-454d-97dc-eb17725575b6
+@customerId = 3ecce964-6ba3-41e2-973c-ca3cb78609f3
 
 ###
 GET {{url}}/parcels?customerId={{customerId}}
 
 ###
-GET {{url}}/parcels/{{id}}
+GET {{url}}/parcels/{{parcelId}}
 
 ###
 POST {{url}}/parcels
@@ -20,4 +20,4 @@ POST {{url}}/parcels
 }
 
 ###
-DELETE {{url}}/parcels/{{id}}
+DELETE {{url}}/parcels/{{parcelId}}
