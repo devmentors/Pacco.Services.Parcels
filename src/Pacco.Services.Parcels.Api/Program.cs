@@ -26,7 +26,6 @@ namespace Pacco.Services.Parcels.Api
                     .AddInfrastructure()
                     .Build())
                 .Configure(app => app
-                    .UseErrorHandler()
                     .UseInfrastructure()
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsync("Welcome to Pacco Parcels Service!"))

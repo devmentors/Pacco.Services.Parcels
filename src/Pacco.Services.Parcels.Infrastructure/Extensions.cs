@@ -7,6 +7,7 @@ using Convey.HTTP;
 using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
+using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,8 +43,10 @@ namespace Pacco.Services.Parcels.Infrastructure
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
-            app.UsePublicContracts<ContractAttribute>()
+            app.UseErrorHandler()
+                .UsePublicContracts<ContractAttribute>()
                 .UseInitializers()
+                .UseConsul()
                 .UseRabbitMq()
                 .SubscribeCommand<AddParcel>()
                 .SubscribeCommand<DeleteParcel>();
