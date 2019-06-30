@@ -8,5 +8,6 @@ namespace Pacco.Services.Parcels.Application.Queries
     public class GetParcels : IQuery<IEnumerable<ParcelDto>>
     {
         public Guid? CustomerId { get; set; }
+        public bool IncludeAddedToOrders { get; set; }
     }
 }

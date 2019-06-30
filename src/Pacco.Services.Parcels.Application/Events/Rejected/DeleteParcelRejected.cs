@@ -1,7 +1,7 @@
 using System;
 using Convey.CQRS.Events;
 
-namespace Pacco.Services.Parcels.Application.Events
+namespace Pacco.Services.Parcels.Application.Events.Rejected
 {
     [Contract]
     public class DeleteParcelRejected : IRejectedEvent

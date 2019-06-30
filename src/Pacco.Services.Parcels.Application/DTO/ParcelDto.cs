@@ -12,6 +12,7 @@ namespace Pacco.Services.Parcels.Application.DTO
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Guid? OrderId { get; set; }
 
         public ParcelDto()
         {
@@ -26,6 +27,7 @@ namespace Pacco.Services.Parcels.Application.DTO
             Name = parcel.Name;
             Description = parcel.Description;
             CreatedAt = parcel.CreatedAt;
+            OrderId = parcel.OrderId;
         }
     }
 }

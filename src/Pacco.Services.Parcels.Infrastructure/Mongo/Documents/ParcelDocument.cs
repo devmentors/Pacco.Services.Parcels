@@ -13,5 +13,7 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Guid? OrderId { get; set; }
+        public bool AddedToOrder { get; set; }
     }
 }

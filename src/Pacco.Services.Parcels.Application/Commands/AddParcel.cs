@@ -9,16 +9,16 @@ namespace Pacco.Services.Parcels.Application.Commands
         public Guid Id { get; }
         public Guid CustomerId { get; }
         public string Variant { get; }
-        public string Dimension { get; }
+        public string Size { get; }
         public string Name { get; }
         public string Description { get; }
 
-        public AddParcel(Guid id, Guid customerId, string variant, string dimension, string name, string description)
+        public AddParcel(Guid id, Guid customerId, string variant, string size, string name, string description)
         {
             Id = id == Guid.Empty ? Guid.NewGuid() : id;
             CustomerId = customerId;
             Variant = variant;
-            Dimension = dimension;
+            Size = size;
             Name = name;
             Description = description;
         }

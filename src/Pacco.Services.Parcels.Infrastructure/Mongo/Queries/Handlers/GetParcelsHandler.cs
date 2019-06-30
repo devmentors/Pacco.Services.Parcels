@@ -29,6 +29,11 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Queries.Handlers
                 documents = documents.Where(p => p.CustomerId == query.CustomerId);
             }
 
+            if (!query.IncludeAddedToOrders)
+            {
+                documents = documents.Where(p => !p.AddedToOrder);
+            }
+
             var parcels = await documents.ToListAsync();
 
             return parcels.Select(p => p.AsDto());
