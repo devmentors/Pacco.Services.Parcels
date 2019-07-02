@@ -11,14 +11,10 @@ namespace Pacco.Services.Parcels.Infrastructure.Exceptions
     {
         public object Map(Exception exception, object message)
         {
-            if (message is DeleteParcel)
-            {
-
-            }
-
             switch (exception)
             {
                 case CannotDeleteParcelException ex: return new DeleteParcelRejected(ex.Id, ex.Message, ex.Code);
+                case CustomerNotFoundException ex: return new AddParcelRejected(ex.Message, ex.Code);
                 case InvalidParcelVariantException ex: return new AddParcelRejected(ex.Message, ex.Code);
                 case InvalidParcelSizeException ex: return new AddParcelRejected(ex.Message, ex.Code);
                 case InvalidParcelNameException ex: return new AddParcelRejected(ex.Message, ex.Code);

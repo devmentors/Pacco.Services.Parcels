@@ -35,5 +35,14 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Documents
                 CreatedAt = document.CreatedAt,
                 OrderId = document.OrderId,
             };
+
+        public static Customer AsEntity(this CustomerDocument document)
+            => new Customer(document.Id);
+
+        public static CustomerDocument AsDocument(this Customer entity)
+            => new CustomerDocument
+            {
+                Id = entity.Id
+            };
     }
 }

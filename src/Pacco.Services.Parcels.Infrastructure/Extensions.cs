@@ -29,6 +29,7 @@ namespace Pacco.Services.Parcels.Infrastructure
         {
             builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddTransient<IMessageBroker, MessageBroker>();
+            builder.Services.AddTransient<ICustomerRepository, CustomerMongoRepository>();
             builder.Services.AddTransient<IParcelRepository, ParcelMongoRepository>();
 
             return builder
@@ -55,7 +56,8 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .SubscribeEvent<OrderCanceled>()
                 .SubscribeEvent<OrderDeleted>()
                 .SubscribeEvent<ParcelAddedToOrder>()
-                .SubscribeEvent<ParcelDeletedFromOrder>();
+                .SubscribeEvent<ParcelDeletedFromOrder>()
+                .SubscribeEvent<CustomerCreated>();
 
             return app;
         }
