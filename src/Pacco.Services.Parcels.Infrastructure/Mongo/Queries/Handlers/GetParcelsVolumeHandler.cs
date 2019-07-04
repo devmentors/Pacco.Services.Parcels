@@ -26,7 +26,6 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Queries.Handlers
         {
             var documents = await _parcelRepository.FindAsync(p => query.ParcelIds.Contains(p.Id));
             var parcels = documents.Select(d => d.AsEntity());
-
             var volume = _parcelsService.CalculateVolume(parcels);
             
             return new ParcelsVolumeDto
