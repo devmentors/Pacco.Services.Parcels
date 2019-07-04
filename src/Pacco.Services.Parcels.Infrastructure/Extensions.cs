@@ -41,6 +41,7 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddRabbitMq()
                 .AddExceptionToMessageMapper<ExceptionToMessageMapper>()
                 .AddMongo()
+                .AddMongoRepository<CustomerDocument, Guid>("Customers")
                 .AddMongoRepository<ParcelDocument, Guid>("Parcels");
         }
 
