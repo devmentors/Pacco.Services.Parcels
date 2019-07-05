@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Convey.CQRS.Commands;
 using Microsoft.Extensions.Logging;
 using Pacco.Services.Parcels.Application.Events;
+using Pacco.Services.Parcels.Application.Exceptions;
 using Pacco.Services.Parcels.Application.Services;
 using Pacco.Services.Parcels.Core.Exceptions;
 using Pacco.Services.Parcels.Core.Repositories;
@@ -28,6 +29,11 @@ namespace Pacco.Services.Parcels.Application.Commands.Handlers
             if (parcel is null)
             {
                 throw new ParcelNotFoundException(command.Id);
+            }
+
+            if (command.CustomerId.HasValue && command.CustomerId != parcel.CustomerId)
+            {
+                throw new UnauthorizedParcelAccessException(command.Id, command.CustomerId.Value);
             }
 
             if (parcel.AddedToOrder)

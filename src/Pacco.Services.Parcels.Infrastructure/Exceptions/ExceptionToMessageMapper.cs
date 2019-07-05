@@ -21,6 +21,7 @@ namespace Pacco.Services.Parcels.Infrastructure.Exceptions
                 case InvalidParcelDescriptionException ex: return new AddParcelRejected(ex.Message, ex.Code);
                 case ParcelNotFoundException ex:
                     return message is DeleteParcel ? new DeleteParcelRejected(Guid.Empty, ex.Message, ex.Code) : null;
+                case UnauthorizedParcelAccessException ex: return new AddParcelRejected(ex.Message, ex.Code);
             }
 
             return null;
