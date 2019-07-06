@@ -15,19 +15,27 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Queries.Handlers
         private readonly IMongoRepository<ParcelDocument, Guid> _parcelRepository;
         private readonly IParcelsService _parcelsService;
 
-        public GetParcelsVolumeHandler(IMongoRepository<ParcelDocument, Guid> parcelRepository, 
+        public GetParcelsVolumeHandler(IMongoRepository<ParcelDocument, Guid> parcelRepository,
             IParcelsService parcelsService)
         {
             _parcelRepository = parcelRepository;
             _parcelsService = parcelsService;
         }
-        
+
         public async Task<ParcelsVolumeDto> HandleAsync(GetParcelsVolume query)
         {
+            if (query.ParcelIds is null || !query.ParcelIds.Any())
+            {
+                return new ParcelsVolumeDto
+                {
+                    Volume = 0
+                };
+            }
+
             var documents = await _parcelRepository.FindAsync(p => query.ParcelIds.Contains(p.Id));
             var parcels = documents.Select(d => d.AsEntity());
             var volume = _parcelsService.CalculateVolume(parcels);
-            
+
             return new ParcelsVolumeDto
             {
                 Volume = volume
