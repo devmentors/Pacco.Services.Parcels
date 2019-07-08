@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>Pacco.Services.Parcels</RootNamespace>
+    <RootNamespace>Pacco.Services.Parcels.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
