@@ -1,5 +1,6 @@
 using System;
 using Convey;
+using Convey.Configurations.Vault;
 using Convey.Persistence.MongoDB;
 using Convey.CQRS.Queries;
 using Convey.Discovery.Consul;
@@ -7,6 +8,9 @@ using Convey.HTTP;
 using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
+using Convey.Metrics.AppMetrics;
+using Convey.Tracing.Jaeger;
+using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore.Builder;
@@ -38,9 +42,12 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddHttpClient()
                 .AddConsul()
                 .AddFabio()
-                .AddRabbitMq()
+                .AddRabbitMq(plugins: p => p.RegisterJaeger())
                 .AddExceptionToMessageMapper<ExceptionToMessageMapper>()
                 .AddMongo()
+                .AddMetrics()
+                .AddJaeger()
+                .AddVault()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers")
                 .AddMongoRepository<ParcelDocument, Guid>("Parcels");
         }
@@ -48,9 +55,11 @@ namespace Pacco.Services.Parcels.Infrastructure
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
             app.UseErrorHandler()
-                .UsePublicContracts<ContractAttribute>()
+                .UseVault()
                 .UseInitializers()
+                .UsePublicContracts<ContractAttribute>()
                 .UseConsul()
+                .UseMetrics()
                 .UseRabbitMq()
                 .SubscribeCommand<AddParcel>()
                 .SubscribeCommand<DeleteParcel>()
