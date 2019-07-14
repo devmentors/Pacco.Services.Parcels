@@ -7,6 +7,7 @@ using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Pacco.Services.Parcels.Application;
 using Pacco.Services.Parcels.Application.Commands;
 using Pacco.Services.Parcels.Application.DTO;
@@ -20,6 +21,7 @@ namespace Pacco.Services.Parcels.Api
         public static async Task Main(string[] args)
             => await WebHost.CreateDefaultBuilder(args)
                 .ConfigureServices(services => services
+                    .AddOpenTracing()
                     .AddConvey()
                     .AddWebApi()
                     .AddApplication()
