@@ -1,8 +1,5 @@
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Convey;
-using Convey.Configurations.Vault;
 using Convey.Persistence.MongoDB;
 using Convey.CQRS.Queries;
 using Convey.Discovery.Consul;
@@ -16,11 +13,7 @@ using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using OpenTracing;
-using OpenTracing.Propagation;
-using OpenTracing.Tag;
 using Pacco.Services.Parcels.Application;
 using Pacco.Services.Parcels.Application.Commands;
 using Pacco.Services.Parcels.Application.Events.External;
@@ -53,7 +46,6 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddMongo()
                 .AddMetrics()
                 .AddJaeger()
-                .AddVault()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers")
                 .AddMongoRepository<ParcelDocument, Guid>("Parcels");
         }
@@ -61,7 +53,6 @@ namespace Pacco.Services.Parcels.Infrastructure
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
             app.UseErrorHandler()
-                .UseVault()
                 .UseJaeger()
                 .UseInitializers()
                 .UsePublicContracts<ContractAttribute>()
