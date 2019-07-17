@@ -21,7 +21,12 @@ namespace Pacco.Services.Parcels.Api
     public class Program
     {
         public static async Task Main(string[] args)
-            => await WebHost.CreateDefaultBuilder(args)
+            => await GetWebHostBuilder(args)
+                .Build()
+                .RunAsync();
+
+        public static IWebHostBuilder GetWebHostBuilder(string[] args)
+            => WebHost.CreateDefaultBuilder(args)
                 .ConfigureServices(services => services
                     .AddOpenTracing()
                     .AddConvey()
@@ -40,8 +45,6 @@ namespace Pacco.Services.Parcels.Api
                         .Post<AddParcel>("parcels",
                             afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.Id}"))))
                 .UseLogging()
-                .UseVault()
-                .Build()
-                .RunAsync();
+                .UseVault();
     }
 }
