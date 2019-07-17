@@ -17,10 +17,7 @@
     "Pacco.Services.Parcels": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5007",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "local"
-      }
+      "applicationUrl": "http://localhost:5007"
     }
   }
 }

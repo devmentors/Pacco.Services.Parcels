@@ -56,7 +56,7 @@ namespace Pacco.Services.Parcels.PactProviderTests.PACT
         public ParcelsApiPactProviderTests(ITestOutputHelper output)
         {
             _output = output;
-            _mongoDbFixture = new MongoDbFixture<ParcelDocument, Guid>("parcels-service", "Parcels");
+            _mongoDbFixture = new MongoDbFixture<ParcelDocument, Guid>("test-parcels-service", "Parcels");
         }
 
         protected virtual void Dispose(bool disposing)
