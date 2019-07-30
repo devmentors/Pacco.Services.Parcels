@@ -6,13 +6,13 @@ namespace Pacco.Services.Parcels.Application.Events.Rejected
     [Contract]
     public class DeleteParcelRejected : IRejectedEvent
     {
-        public Guid Id { get; }
+        public Guid ParcelId { get; }
         public string Reason { get; }
         public string Code { get; }
 
-        public DeleteParcelRejected(Guid id, string reason, string code)
+        public DeleteParcelRejected(Guid parcelId, string reason, string code)
         {
-            Id = id;
+            ParcelId = parcelId;
             Reason = reason;
             Code = code;
         }

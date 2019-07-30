@@ -6,11 +6,11 @@ namespace Pacco.Services.Parcels.Application.Events
     [Contract]
     public class ParcelDeleted : IEvent
     {
-        public Guid Id { get; }
+        public Guid ParcelId { get; }
         
-        public ParcelDeleted(Guid id)
+        public ParcelDeleted(Guid parcelId)
         {
-            Id = id;
+            ParcelId = parcelId;
         }
     }
 }

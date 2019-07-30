@@ -19,7 +19,7 @@ namespace Pacco.Services.Parcels.Infrastructure.Mongo.Queries.Handlers
 
         public async Task<ParcelDto> HandleAsync(GetParcel query)
         {
-            var document = await _parcelRepository.GetAsync(p => p.Id == query.Id);
+            var document = await _parcelRepository.GetAsync(p => p.Id == query.ParcelId);
 
             return document?.AsDto();
         }

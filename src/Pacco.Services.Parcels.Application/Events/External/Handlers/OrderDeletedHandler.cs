@@ -15,7 +15,7 @@ namespace Pacco.Services.Parcels.Application.Events.External.Handlers
 
         public async Task HandleAsync(OrderDeleted @event)
         {
-            var parcel = await _parcelRepository.GetByOrderAsync(@event.Id);
+            var parcel = await _parcelRepository.GetByOrderAsync(@event.OrderId);
             if (parcel is null)
             {
                 return;

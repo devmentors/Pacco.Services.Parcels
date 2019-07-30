@@ -39,11 +39,11 @@ namespace Pacco.Services.Parcels.Api
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                         .Get<GetParcelsVolume, ParcelsVolumeDto>("parcels/volume")
-                        .Get<GetParcel, ParcelDto>("parcels/{id}")
+                        .Get<GetParcel, ParcelDto>("parcels/{parcelId}")
                         .Get<GetParcels, IEnumerable<ParcelDto>>("parcels")
-                        .Delete<DeleteParcel>("parcels/{id}")
+                        .Delete<DeleteParcel>("parcels/{parcelId}")
                         .Post<AddParcel>("parcels",
-                            afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.Id}"))))
+                            afterDispatch: (cmd, ctx) => ctx.Response.Created($"parcels/{cmd.ParcelId}"))))
                 .UseLogging()
                 .UseVault();
     }

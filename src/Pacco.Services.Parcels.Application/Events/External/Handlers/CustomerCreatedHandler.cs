@@ -16,12 +16,12 @@ namespace Pacco.Services.Parcels.Application.Events.External.Handlers
 
         public async Task HandleAsync(CustomerCreated @event)
         {
-            if (await _customerRepository.ExistsAsync(@event.Id))
+            if (await _customerRepository.ExistsAsync(@event.CustomerId))
             {
                 return;
             }
 
-            await _customerRepository.AddAsync(new Customer(@event.Id));
+            await _customerRepository.AddAsync(new Customer(@event.CustomerId));
         }
     }
 }

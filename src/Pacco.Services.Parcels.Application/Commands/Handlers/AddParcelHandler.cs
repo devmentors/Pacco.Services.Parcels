@@ -46,11 +46,11 @@ namespace Pacco.Services.Parcels.Application.Commands.Handlers
                 throw new CustomerNotFoundException(command.CustomerId);
             }
 
-            var parcel = new Parcel(command.Id, command.CustomerId, variant, size, command.Name,
+            var parcel = new Parcel(command.ParcelId, command.CustomerId, variant, size, command.Name,
                 command.Description, _dateTimeProvider.Now);
             await _parcelRepository.AddAsync(parcel);
-            _logger.LogInformation($"Added a parcel with id: {command.Id} for customer: {command.CustomerId}");
-            await _messageBroker.PublishAsync(new ParcelAdded(command.Id));
+            _logger.LogInformation($"Added a parcel with id: {command.ParcelId} for customer: {command.CustomerId}");
+            await _messageBroker.PublishAsync(new ParcelAdded(command.ParcelId));
         }
     }
 }

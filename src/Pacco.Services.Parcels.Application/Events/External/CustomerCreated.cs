@@ -7,11 +7,11 @@ namespace Pacco.Services.Parcels.Application.Events.External
     [MessageNamespace("customers")]
     public class CustomerCreated : IEvent
     {
-        public Guid Id { get; }
+        public Guid CustomerId { get; }
 
-        public CustomerCreated(Guid id)
+        public CustomerCreated(Guid customerId)
         {
-            Id = id;
+            CustomerId = customerId;
         }
     }
 }

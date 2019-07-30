@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Pacco.Services.Parcels.Api;
 using Pacco.Services.Parcels.Core.Entities;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Documents;
 using Pacco.Services.Parcels.PactProviderTests.Fixtures;

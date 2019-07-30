@@ -25,25 +25,25 @@ namespace Pacco.Services.Parcels.Application.Commands.Handlers
 
         public async Task HandleAsync(DeleteParcel command)
         {
-            var parcel = await _parcelRepository.GetAsync(command.Id);
+            var parcel = await _parcelRepository.GetAsync(command.ParcelId);
             if (parcel is null)
             {
-                throw new ParcelNotFoundException(command.Id);
+                throw new ParcelNotFoundException(command.ParcelId);
             }
 
             if (command.CustomerId.HasValue && command.CustomerId != parcel.CustomerId)
             {
-                throw new UnauthorizedParcelAccessException(command.Id, command.CustomerId.Value);
+                throw new UnauthorizedParcelAccessException(command.ParcelId, command.CustomerId.Value);
             }
 
             if (parcel.AddedToOrder)
             {
-                throw new CannotDeleteParcelException(command.Id);
+                throw new CannotDeleteParcelException(command.ParcelId);
             }
 
-            await _parcelRepository.DeleteAsync(command.Id);
-            _logger.LogInformation($"Deleted a parcel with id: {command.Id}");
-            await _messageBroker.PublishAsync(new ParcelDeleted(command.Id));
+            await _parcelRepository.DeleteAsync(command.ParcelId);
+            _logger.LogInformation($"Deleted a parcel with id: {command.ParcelId}");
+            await _messageBroker.PublishAsync(new ParcelDeleted(command.ParcelId));
         }
     }
 }
