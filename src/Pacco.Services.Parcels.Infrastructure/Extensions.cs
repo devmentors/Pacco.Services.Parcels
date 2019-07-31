@@ -19,6 +19,7 @@ using Pacco.Services.Parcels.Application.Commands;
 using Pacco.Services.Parcels.Application.Events.External;
 using Pacco.Services.Parcels.Application.Services;
 using Pacco.Services.Parcels.Core.Repositories;
+using Pacco.Services.Parcels.Infrastructure.Contexts;
 using Pacco.Services.Parcels.Infrastructure.Exceptions;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Documents;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Repositories;
@@ -34,6 +35,8 @@ namespace Pacco.Services.Parcels.Infrastructure
             builder.Services.AddTransient<IMessageBroker, MessageBroker>();
             builder.Services.AddTransient<ICustomerRepository, CustomerMongoRepository>();
             builder.Services.AddTransient<IParcelRepository, ParcelMongoRepository>();
+            builder.Services.AddTransient<IAppContextFactory, AppContextFactory>();
+            builder.Services.AddTransient(ctx => ctx.GetRequiredService<IAppContextFactory>().Create());
 
             return builder
                 .AddQueryHandlers()
