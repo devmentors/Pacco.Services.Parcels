@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\Pactify\src\Pactify\Pactify.csproj" />
       <ProjectReference Include="..\..\src\Pacco.Services.Parcels.Api\Pacco.Services.Parcels.Api.csproj" />
     </ItemGroup>
 
