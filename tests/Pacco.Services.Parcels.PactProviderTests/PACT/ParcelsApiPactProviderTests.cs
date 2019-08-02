@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.TestHost;
+using Pacco.Services.Parcels.Api;
 using Pacco.Services.Parcels.Core.Entities;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Documents;
 using Pacco.Services.Parcels.PactProviderTests.Fixtures;
-using Pacco.Services.Parcels.PactProviderTests.Outputters;
-using PactNet;
-using PactNet.Infrastructure.Outputters;
+using Pactify;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Pacco.Services.Parcels.PactProviderTests.PACT
 {
@@ -19,20 +18,11 @@ namespace Pacco.Services.Parcels.PactProviderTests.PACT
         {
             await _mongoDbFixture.InsertAsync(Parcel);
             
-            var pactConfig = new PactVerifierConfig
-            {
-                Outputters = new List<IOutput>
-                {
-                    new XUnitOutputter(_output),
-                },
-                Verbose = true
-            };
-
-            new PactVerifier(pactConfig)
-                .ServiceProvider("parcels", "http://localhost:5007")
-                .HonoursPactWith("orders")
-                .PactUri(@"..\..\..\..\..\..\pacts\orders-parcels.json")
-                .Verify();
+            await PactVerifier
+                .Create(_httpClient)
+                .Between("orders", "parcels")
+                .RetrievedFromFile(@"../../../../../../pacts")
+                .VerifyAsync();
         }
 
         #region ARRANGE
@@ -42,17 +32,19 @@ namespace Pacco.Services.Parcels.PactProviderTests.PACT
             Id =  new Guid("c68a24ea-384a-4fdc-99ce-8c9a28feac64"),
             Name = "Product",
             Size = Size.Huge,
-            Variant = Variant.Weapon
+            Variant = Variant.Weapon,
+            CreatedAt = DateTime.Now
         };
         
-        private readonly ITestOutputHelper _output;
         private readonly MongoDbFixture<ParcelDocument, Guid> _mongoDbFixture;
+        private readonly HttpClient _httpClient;
         private bool _disposed = false;
 
-        public ParcelsApiPactProviderTests(ITestOutputHelper output)
+        public ParcelsApiPactProviderTests()
         {
-            _output = output;
             _mongoDbFixture = new MongoDbFixture<ParcelDocument, Guid>("test-parcels-service", "Parcels");
+            var testServer = new TestServer(Program.GetWebHostBuilder(new string[0]));
+            _httpClient = testServer.CreateClient();
         }
 
         protected virtual void Dispose(bool disposing)
