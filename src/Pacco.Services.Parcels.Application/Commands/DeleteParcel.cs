@@ -7,12 +7,10 @@ namespace Pacco.Services.Parcels.Application.Commands
     public class DeleteParcel : ICommand
     {
         public Guid ParcelId { get; }
-        public Guid? CustomerId { get; }
 
-        public DeleteParcel(Guid parcelId, Guid? customerId)
+        public DeleteParcel(Guid parcelId)
         {
             ParcelId = parcelId;
-            CustomerId = customerId;
         }
     }
 }
