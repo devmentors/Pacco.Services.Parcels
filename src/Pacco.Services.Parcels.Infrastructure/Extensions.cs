@@ -9,6 +9,7 @@ using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Metrics.AppMetrics;
+using Convey.Persistence.Redis;
 using Convey.Tracing.Jaeger;
 using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
@@ -36,7 +37,6 @@ namespace Pacco.Services.Parcels.Infrastructure
     {
         public static IConveyBuilder AddInfrastructure(this IConveyBuilder builder)
         {
-            builder.Services.Configure<KestrelServerOptions>(options => { options.AllowSynchronousIO = true; });
             builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddTransient<IMessageBroker, MessageBroker>();
             builder.Services.AddTransient<ICustomerRepository, CustomerMongoRepository>();
@@ -53,6 +53,7 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
                 .AddExceptionToMessageMapper<ExceptionToMessageMapper>()
                 .AddMongo()
+                .AddRedis()
                 .AddMetrics()
                 .AddJaeger()
                 .AddHandlersLogging()
@@ -66,7 +67,6 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .UseJaeger()
                 .UseInitializers()
                 .UsePublicContracts<ContractAttribute>()
-                .UseConsul()
                 .UseMetrics()
                 .UseRabbitMq()
                 .SubscribeCommand<AddParcel>()
