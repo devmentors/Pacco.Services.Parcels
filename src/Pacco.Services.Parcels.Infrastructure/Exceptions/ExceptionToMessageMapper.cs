@@ -1,4 +1,5 @@
 using System;
+using Convey.CQRS.Events;
 using Convey.MessageBrokers.RabbitMQ;
 using Pacco.Services.Parcels.Application.Commands;
 using Pacco.Services.Parcels.Application.Events.Rejected;
@@ -10,21 +11,19 @@ namespace Pacco.Services.Parcels.Infrastructure.Exceptions
     public class ExceptionToMessageMapper : IExceptionToMessageMapper
     {
         public object Map(Exception exception, object message)
-        {
-            switch (exception)
+            => exception switch
             {
-                case CannotDeleteParcelException ex: return new DeleteParcelRejected(ex.Id, ex.Message, ex.Code);
-                case CustomerNotFoundException ex: return new AddParcelRejected(ex.Message, ex.Code);
-                case InvalidParcelVariantException ex: return new AddParcelRejected(ex.Message, ex.Code);
-                case InvalidParcelSizeException ex: return new AddParcelRejected(ex.Message, ex.Code);
-                case InvalidParcelNameException ex: return new AddParcelRejected(ex.Message, ex.Code);
-                case InvalidParcelDescriptionException ex: return new AddParcelRejected(ex.Message, ex.Code);
-                case ParcelNotFoundException ex:
-                    return message is DeleteParcel ? new DeleteParcelRejected(Guid.Empty, ex.Message, ex.Code) : null;
-                case UnauthorizedParcelAccessException ex: return new AddParcelRejected(ex.Message, ex.Code);
-            }
-
-            return null;
-        }
+                CannotDeleteParcelException ex => (IRejectedEvent) new DeleteParcelRejected(ex.Id, ex.Message, ex.Code),
+                CustomerNotFoundException ex => new AddParcelRejected(ex.Message, ex.Code),
+                InvalidParcelVariantException ex => new AddParcelRejected(ex.Message, ex.Code),
+                InvalidParcelSizeException ex => new AddParcelRejected(ex.Message, ex.Code),
+                InvalidParcelNameException ex => new AddParcelRejected(ex.Message, ex.Code),
+                InvalidParcelDescriptionException ex => new AddParcelRejected(ex.Message, ex.Code),
+                ParcelNotFoundException ex => (message is DeleteParcel
+                    ? new DeleteParcelRejected(Guid.Empty, ex.Message, ex.Code)
+                    : null),
+                UnauthorizedParcelAccessException ex => new AddParcelRejected(ex.Message, ex.Code),
+                _ => null
+            };
     }
 }
