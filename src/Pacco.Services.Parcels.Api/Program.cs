@@ -28,7 +28,6 @@ namespace Pacco.Services.Parcels.Api
         public static IWebHostBuilder GetWebHostBuilder(string[] args)
             => WebHost.CreateDefaultBuilder(args)
                 .ConfigureServices(services => services
-                    .AddOpenTracing()
                     .AddConvey()
                     .AddWebApi()
                     .AddApplication()

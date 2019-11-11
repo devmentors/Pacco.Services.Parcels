@@ -4,6 +4,7 @@ using Convey;
 using Convey.Persistence.MongoDB;
 using Convey.CQRS.Queries;
 using Convey.Discovery.Consul;
+using Convey.Docs.Swagger;
 using Convey.HTTP;
 using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
@@ -14,6 +15,7 @@ using Convey.Tracing.Jaeger;
 using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
+using Convey.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -37,6 +39,7 @@ namespace Pacco.Services.Parcels.Infrastructure
     {
         public static IConveyBuilder AddInfrastructure(this IConveyBuilder builder)
         {
+            builder.Services.AddOpenTracing();
             builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddTransient<IMessageBroker, MessageBroker>();
             builder.Services.AddTransient<ICustomerRepository, CustomerMongoRepository>();
@@ -58,12 +61,14 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddJaeger()
                 .AddHandlersLogging()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers")
-                .AddMongoRepository<ParcelDocument, Guid>("Parcels");
+                .AddMongoRepository<ParcelDocument, Guid>("Parcels")
+                .AddWebApiSwaggerDocs();
         }
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
             app.UseErrorHandler()
+                .UseSwaggerDocs()
                 .UseJaeger()
                 .UseInitializers()
                 .UsePublicContracts<ContractAttribute>()
