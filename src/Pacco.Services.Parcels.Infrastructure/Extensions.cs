@@ -1,13 +1,19 @@
 using System;
 using System.Linq;
+using System.Text;
 using Convey;
+using Convey.CQRS.Commands;
+using Convey.CQRS.Events;
 using Convey.Persistence.MongoDB;
 using Convey.CQRS.Queries;
 using Convey.Discovery.Consul;
 using Convey.Docs.Swagger;
 using Convey.HTTP;
 using Convey.LoadBalancing.Fabio;
+using Convey.MessageBrokers;
 using Convey.MessageBrokers.CQRS;
+using Convey.MessageBrokers.Inbox;
+using Convey.MessageBrokers.Outbox;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Metrics.AppMetrics;
 using Convey.Persistence.Redis;
@@ -26,6 +32,7 @@ using Pacco.Services.Parcels.Application.Events.External;
 using Pacco.Services.Parcels.Application.Services;
 using Pacco.Services.Parcels.Core.Repositories;
 using Pacco.Services.Parcels.Infrastructure.Contexts;
+using Pacco.Services.Parcels.Infrastructure.Decorators;
 using Pacco.Services.Parcels.Infrastructure.Exceptions;
 using Pacco.Services.Parcels.Infrastructure.Logging;
 using Pacco.Services.Parcels.Infrastructure.Mongo.Documents;
@@ -45,6 +52,8 @@ namespace Pacco.Services.Parcels.Infrastructure
             builder.Services.AddTransient<IParcelRepository, ParcelMongoRepository>();
             builder.Services.AddTransient<IAppContextFactory, AppContextFactory>();
             builder.Services.AddTransient(ctx => ctx.GetRequiredService<IAppContextFactory>().Create());
+            builder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(InboxCommandHandlerDecorator<>));
+            builder.Services.TryDecorate(typeof(IEventHandler<>), typeof(InboxEventHandlerDecorator<>));
 
             return builder
                 .AddQueryHandlers()
@@ -53,6 +62,8 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddConsul()
                 .AddFabio()
                 .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddMessageInbox()
+                .AddMessageOutbox()
                 .AddExceptionToMessageMapper<ExceptionToMessageMapper>()
                 .AddMongo()
                 .AddRedis()
@@ -88,5 +99,20 @@ namespace Pacco.Services.Parcels.Infrastructure
             => accessor.HttpContext?.Request.Headers.TryGetValue("Correlation-Context", out var json) is true
                 ? JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault())
                 : null;
+        
+        internal static string GetSpanContext(this IMessageProperties messageProperties, string header)
+        {
+            if (messageProperties is null)
+            {
+                return string.Empty;
+            }
+
+            if (messageProperties.Headers.TryGetValue(header, out var span) && span is byte[] spanBytes)
+            {
+                return Encoding.UTF8.GetString(spanBytes);
+            }
+
+            return string.Empty;
+        }
     }
 }
