@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pacco.Services.Parcels.Application\Pacco.Services.Parcels.Application.csproj" />
     <ProjectReference Include="..\Pacco.Services.Parcels.Infrastructure\Pacco.Services.Parcels.Infrastructure.csproj" />
   </ItemGroup>
 
