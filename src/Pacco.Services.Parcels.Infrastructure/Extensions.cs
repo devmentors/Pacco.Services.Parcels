@@ -45,7 +45,6 @@ namespace Pacco.Services.Parcels.Infrastructure
     {
         public static IConveyBuilder AddInfrastructure(this IConveyBuilder builder)
         {
-            builder.Services.AddOpenTracing();
             builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddTransient<IMessageBroker, MessageBroker>();
             builder.Services.AddTransient<ICustomerRepository, CustomerMongoRepository>();
