@@ -44,6 +44,7 @@ namespace Pacco.Services.Parcels.PactProviderTests.PACT
         {
             _mongoDbFixture = new MongoDbFixture<ParcelDocument, Guid>("test-parcels-service", "Parcels");
             var testServer = new TestServer(Program.GetWebHostBuilder(new string[0]));
+            testServer.AllowSynchronousIO = true;
             _httpClient = testServer.CreateClient();
         }
 

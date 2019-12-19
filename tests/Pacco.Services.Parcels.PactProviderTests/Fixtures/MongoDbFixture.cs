@@ -22,7 +22,7 @@ namespace Pacco.Services.Parcels.PactProviderTests.Fixtures
             _databaseName = databaseName;
             _collectionName = collectionName;
             _database = _client.GetDatabase(databaseName);
-            InitializeMongo();
+            //InitializeMongo();
             _collection = _database.GetCollection<TEntity>(collectionName);
         }
         
