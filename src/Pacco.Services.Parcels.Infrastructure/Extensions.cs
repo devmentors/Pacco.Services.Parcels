@@ -69,8 +69,8 @@ namespace Pacco.Services.Parcels.Infrastructure
                 .AddMetrics()
                 .AddJaeger()
                 .AddHandlersLogging()
-                .AddMongoRepository<CustomerDocument, Guid>("Customers")
-                .AddMongoRepository<ParcelDocument, Guid>("Parcels")
+                .AddMongoRepository<CustomerDocument, Guid>("customers")
+                .AddMongoRepository<ParcelDocument, Guid>("parcels")
                 .AddWebApiSwaggerDocs();
         }
 
