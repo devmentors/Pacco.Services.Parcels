@@ -2,7 +2,7 @@ using System;
 
 namespace Pacco.Services.Parcels.Core.Exceptions
 {
-    public class ParcelNotFoundException : ExceptionBase
+    public class ParcelNotFoundException : DomainException
     {
         public override string Code => "parcel_not_found";
 

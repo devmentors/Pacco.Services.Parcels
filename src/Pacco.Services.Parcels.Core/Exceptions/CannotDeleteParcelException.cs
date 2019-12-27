@@ -2,7 +2,7 @@ using System;
 
 namespace Pacco.Services.Parcels.Core.Exceptions
 {
-    public class CannotDeleteParcelException : ExceptionBase
+    public class CannotDeleteParcelException : DomainException
     {
         public override string Code => "cannot_delete_parcel";
         public Guid Id { get; }

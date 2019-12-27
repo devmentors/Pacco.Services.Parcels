@@ -1,9 +1,8 @@
 using System;
-using Pacco.Services.Parcels.Core.Exceptions;
 
 namespace Pacco.Services.Parcels.Application.Exceptions
 {
-    public class UnauthorizedParcelAccessException : ExceptionBase
+    public class UnauthorizedParcelAccessException : AppException
     {
         public override string Code => "unauthorized_parcel_access";
 

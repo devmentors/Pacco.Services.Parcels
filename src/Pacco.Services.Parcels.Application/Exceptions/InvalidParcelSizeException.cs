@@ -1,8 +1,6 @@
-using Pacco.Services.Parcels.Core.Exceptions;
-
 namespace Pacco.Services.Parcels.Application.Exceptions
 {
-    public class InvalidParcelSizeException : ExceptionBase
+    public class InvalidParcelSizeException : AppException
     {
         public override string Code => "invalid_parcel_size";
         public string Size { get; }

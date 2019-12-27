@@ -1,6 +1,6 @@
 namespace Pacco.Services.Parcels.Core.Exceptions
 {
-    public class InvalidParcelNameException : ExceptionBase
+    public class InvalidParcelNameException : DomainException
     {
         public override string Code => "invalid_parcel_name";
 

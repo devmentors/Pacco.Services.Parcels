@@ -1,8 +1,6 @@
-using Pacco.Services.Parcels.Core.Exceptions;
-
 namespace Pacco.Services.Parcels.Application.Exceptions
 {
-    public class InvalidParcelVariantException : ExceptionBase
+    public class InvalidParcelVariantException : AppException
     {
         public override string Code => "invalid_parcel_variant";
         public string Variant { get; }
