@@ -1,5 +1,4 @@
 using System;
-using Convey.CQRS.Events;
 using Convey.MessageBrokers.RabbitMQ;
 using Pacco.Services.Parcels.Application.Commands;
 using Pacco.Services.Parcels.Application.Events.Rejected;
@@ -13,7 +12,7 @@ namespace Pacco.Services.Parcels.Infrastructure.Exceptions
         public object Map(Exception exception, object message)
             => exception switch
             {
-                CannotDeleteParcelException ex => (IRejectedEvent) new DeleteParcelRejected(ex.Id, ex.Message, ex.Code),
+                CannotDeleteParcelException ex => new DeleteParcelRejected(ex.Id, ex.Message, ex.Code),
                 CustomerNotFoundException ex => new AddParcelRejected(ex.Message, ex.Code),
                 InvalidParcelVariantException ex => new AddParcelRejected(ex.Message, ex.Code),
                 InvalidParcelSizeException ex => new AddParcelRejected(ex.Message, ex.Code),
