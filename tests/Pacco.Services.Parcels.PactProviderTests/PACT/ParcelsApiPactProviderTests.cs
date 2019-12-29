@@ -42,7 +42,7 @@ namespace Pacco.Services.Parcels.PactProviderTests.PACT
 
         public ParcelsApiPactProviderTests()
         {
-            _mongoDbFixture = new MongoDbFixture<ParcelDocument, Guid>("test-parcels-service", "Parcels");
+            _mongoDbFixture = new MongoDbFixture<ParcelDocument, Guid>("test-parcels-service", "parcels");
             var testServer = new TestServer(Program.GetWebHostBuilder(new string[0]));
             testServer.AllowSynchronousIO = true;
             _httpClient = testServer.CreateClient();
