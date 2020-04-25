@@ -39,7 +39,7 @@ namespace Pacco.Services.Parcels.PactProviderTests.Fixtures
         
         public async Task GetAsync(TKey expectedId, TaskCompletionSource<TEntity> receivedTask)
         {
-            if (expectedId == null)
+            if (expectedId is null)
             {
                 throw new ArgumentNullException(nameof(expectedId));
             }
